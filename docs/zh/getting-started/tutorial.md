@@ -27,7 +27,7 @@ toc_title: "\u6559\u7A0B"
 -   `clickhouse-common` 包包含一个ClickHouse可执行文件。
 -   `clickhouse-server` 包包含要作为服务器运行ClickHouse的配置文件。
 
-服务器配置文件位于 `/etc/clickhouse-server/`. 在进一步讨论之前，请注意 `<path>` 元素in `config.xml`. Path确定数据存储的位置，因此应该位于磁盘容量较大的卷上；默认值为 `/var/lib/clickhouse/`. 如果你想调整配置，直接编辑并不方便 `config.xml` 文件，考虑到它可能会在未来的软件包更新中被重写。 复盖配置元素的推荐方法是创建 [在配置文件。d目录](../operations/configuration-files.md) 它作为 “patches” 要配置。xml
+服务器配置文件位于/etc/clickhouse-server/ 。 在进一步讨论之前，请注意config.xml中的<path>元素。 Path确定数据存储的位置，因此它应该位于具有大磁盘容量的分区上; 默认值是/var/lib/clickhouse/。 如果你想调整配置，直接编辑config.xml文件并不合适，因为它可能在将来的包更新中被重写。 建议在[config.d目录](../operations/configuration-files.md)中创建文件覆盖配置元素的方法，作为config.xml主配置文件的“补丁配置文件”。
 
 你可能已经注意到了, `clickhouse-server` 安装包后不会自动启动。 它也不会在更新后自动重新启动。 您启动服务器的方式取决于您的init系统，通常情况下，它是:
 
