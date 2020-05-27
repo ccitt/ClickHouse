@@ -9,27 +9,27 @@ toc_title: "\u6559\u7A0B"
 
 ## 从本教程中可以期待什么？ {#what-to-expect-from-this-tutorial}
 
-通过本教程，您将学习如何设置一个简单的ClickHouse集群。 它会很小，但容错和可扩展。 然后，我们将使用其中一个示例数据集来填充数据并执行一些演示查询。
+通过阅读本教程，您将了解如何设置一个简单的ClickHouse集群。 它将会很小，但具有容错性和可伸缩性。 然后我们将使用其中一个示例数据集，用数据填充它，并执行一些演示查询。
 
 ## 单节点设置 {#single-node-setup}
 
-为了推迟分布式环境的复杂性，我们将首先在单个服务器或虚拟机上部署ClickHouse。 ClickHouse通常是从安装 [黛布](install.md#install-from-deb-packages) 或 [rpm](install.md#from-rpm-packages) 包，但也有 [替代办法](install.md#from-docker-image) 对于不支持它们的操作系统。
+为了推迟分布式环境的复杂性，我们将从单个服务器或虚拟机上部署ClickHouse开始。 Clickhouse通常是通过[deb](install.md#install-from-deb-packages)或[rpm](install.md#from-rpm-packages)包管理工具安装的，但是对于不支持它们的操作系统，还有[替代选择](install.md#from-docker-image)。
 
-例如，您选择了 `deb` 包和执行:
+例如，你选择了`deb`包并执行:
 
 ``` bash
 {% include 'install/deb.sh' %}
 ```
 
-我们在安装的软件包中有什么:
+我们安装的软件包中有什么:
 
--   `clickhouse-client` 包包含 [ﾂ环板clientｮﾂ嘉ｯﾂ偲](../interfaces/cli.md) 应用程序，交互式ClickHouse控制台客户端。
--   `clickhouse-common` 包包含一个ClickHouse可执行文件。
--   `clickhouse-server` 包包含要作为服务器运行ClickHouse的配置文件。
+-   `clickhouse-client` 包含 [clickhouse-client](../interfaces/cli.md) 应用程序，交互式ClickHouse控制台客户端。
+-   `clickhouse-common` 包含一个ClickHouse可执行文件。
+-   `clickhouse-server` 包含要作为服务器运行ClickHouse的配置文件。
 
 服务器配置文件位于 `/etc/clickhouse-server/`. 在进一步讨论之前，请注意 `<path>` 元素in `config.xml`. Path确定数据存储的位置，因此应该位于磁盘容量较大的卷上；默认值为 `/var/lib/clickhouse/`. 如果你想调整配置，直接编辑并不方便 `config.xml` 文件，考虑到它可能会在未来的软件包更新中被重写。 复盖配置元素的推荐方法是创建 [在配置文件。d目录](../operations/configuration-files.md) 它作为 “patches” 要配置。xml
 
-你可能已经注意到了, `clickhouse-server` 安装包后不会自动启动。 它也不会在更新后自动重新启动。 您启动服务器的方式取决于您的init系统，通常情况下，它是:
+你可能已经注意到了, `clickhouse-server` 在包安装之后不会自动启动。它也不会在更新后自动重新启动。 启动服务器的方式取决于init系统，通常情况下，它是:
 
 ``` bash
 sudo service clickhouse-server start
@@ -41,9 +41,9 @@ sudo service clickhouse-server start
 sudo /etc/init.d/clickhouse-server start
 ```
 
-服务器日志的默认位置是 `/var/log/clickhouse-server/`. 服务器已准备好处理客户端连接一旦它记录 `Ready for connections` 消息
+服务器日志的默认位置是 `/var/log/clickhouse-server/`。 一旦服务器记录了 `Ready for connections` 消息，它就可以处理客户端连接了。
 
-一旦 `clickhouse-server` 正在运行我们可以利用 `clickhouse-client` 连接到服务器并运行一些测试查询，如 `SELECT "Hello, world!";`.
+一旦 `clickhouse-server` 启动并运行，我们就可以使用 `clickhouse-client` 连接到服务器并运行一些测试查询，比如 `SELECT "Hello, world!";`。
 
 <details markdown="1">
 
